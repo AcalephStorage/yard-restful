@@ -129,3 +129,8 @@ You can run the template locally over the included sample code by using the foll
     rake example:generate
     rake example:clean
 
+Or you can run the following commands manually
+
+    bundle exec yardoc -e ./lib/yard-restful.rb ./example/*.rb
+    open doc/index.html
+

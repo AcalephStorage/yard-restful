@@ -13,6 +13,7 @@ begin
     gem.add_dependency("yard", '>=0.8.3')
     gem.files = Dir.glob("{bin,lib,templates}/**/*").concat(["Rakefile"])
     gem.extra_rdoc_files = ['VERSION', 'README.markdown']
+    gem.add_development_dependency('pry')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

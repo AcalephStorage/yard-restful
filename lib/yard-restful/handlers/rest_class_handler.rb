@@ -1,21 +1,20 @@
 require 'yard'
 
-class YARD::Handlers::Ruby::RestClassHandler < YARD::Handlers::Ruby::Legacy::Base
-  handles TkCLASS
+class YARD::Handlers::Ruby::RestClassHandler < YARD::Handlers::Ruby::Base
+  handles :class
   namespace_only
 
   RESOURCE_OBJECT = YARD::CodeObjects::REST::ResourceObject
   RESOURCES_NAMESPACE = YARD::CodeObjects::REST::RESOURCES_NAMESPACE
   OBJECTS_NAMESPACE = YARD::CodeObjects::REST::OBJECTS_NAMESPACE
 
-  process do
-    if statement.tokens.to_s =~ /^class\s+(#{NAMESPACEMATCH})\s*(?:<\s*(.+)|\Z)/m
+  def process
+    if statement.source.to_s =~ /^class\s+(#{NAMESPACEMATCH})\s*(?:<\s*(.+)|$)/m
       classname = $1
-      superclass_def = $2
       classname = classname.gsub(/\s/, '')
 
       comments = statement.comments
-      restful = !comments.nil? && comments.any? {|comment| comment =~ /@restful/ }
+      restful = !comments.nil? && comments.match(/@restful/)
       return unless restful
 
       if classname =~ /(#{CONSTANTMATCH})$/
@@ -29,18 +28,8 @@ class YARD::Handlers::Ruby::RestClassHandler < YARD::Handlers::Ruby::Legacy::Bas
         end
 
         klass = register RESOURCE_OBJECT.new(namespace, classname)
-        parse_block(:namespace => klass)
+        parse_block(statement.last, :namespace => klass)
       end
-    end
-  end
-end
-
-class YARD::Handlers::Ruby::Legacy::MethodHandler < YARD::Handlers::Ruby::Legacy::Base
-
-  process do
-    # don't register a normal method handler inside of a resource
-    unless (namespace.is_a? YARD::Handlers::Ruby::RestClassHandler::RESOURCE_OBJECT)
-      super
     end
   end
 end

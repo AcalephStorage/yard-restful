@@ -13,4 +13,3 @@ module HtmlBlocksHelper
   end
 
 end
-

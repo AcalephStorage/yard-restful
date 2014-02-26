@@ -20,6 +20,8 @@ module RestFilters
 
   # Select all items from the given list with the tag @restful_api
   def select_restful(list)
+    require 'pry'
+    binding.pry
     (list || []).select(&:restful?)
   end
 

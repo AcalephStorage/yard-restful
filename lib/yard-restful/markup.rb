@@ -24,7 +24,7 @@ module YARD::Templates::Helpers::HtmlSyntaxHighlightHelper
     else
       url = "diagrams/#{filename}"
     end
-    
+
     <<-EOM
       <img src="#{url}">
     EOM
@@ -40,9 +40,9 @@ module Blurb
     def initialize(text)
       @text = text
 
-      extensions = { :fenced_code_blocks => true, 
-                     :no_intra_emphasis => true, 
-                     :tables => true, 
+      extensions = { :fenced_code_blocks => true,
+                     :no_intra_emphasis => true,
+                     :tables => true,
                      :autolink => true
                    }
       renderer = Redcarpet::Render::HTML.new()
@@ -61,7 +61,7 @@ module YARD
     # Helper methods for loading and managing markup types.
     module MarkupHelper
       # remove the normal redcarpet provider and add ours
-      MARKUP_PROVIDERS[:markdown].unshift( { :lib => :redcarpet, 
+      MARKUP_PROVIDERS[:markdown].unshift( { :lib => :redcarpet,
         :const => 'Blurb::CustomMarkupProvider'} )
     end
   end
